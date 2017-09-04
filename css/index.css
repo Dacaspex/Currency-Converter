@@ -1,0 +1,183 @@
+/* Index CSS */
+
+body {
+    margin: 0;
+    padding: 10px;
+    background-color: #f5f5f5;
+}
+h1 {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+    font-weight: 200;
+    border-bottom: 1px solid #03A9F4;
+}
+h3 {
+    font-family: 'Lato';
+    font-weight: 400;
+    font-size: 1.2em;
+    margin: 20px 0;
+}
+h4 {
+    margin: 10px 0;
+    padding: 0;
+    font-family: 'Lato';
+    font-weight: 300;
+}
+select, .select2-container {
+    width: 100% !important;
+}
+input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
+}
+input[type=number]:disabled {
+    background: #fafafa;
+}
+p {
+    font-family: 'Lato';
+}
+a, a:visited {
+    color: #03A9F4;
+    text-decoration: none;
+}
+a:hover, a:active {
+    color: #0085c2;
+}
+
+.wrapper {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    background: white;
+}
+.swap-row > h3 {
+    float: left;
+}
+.swap-row > button {
+    float: right;
+}
+.mat-button {
+    font-size: 1.2em;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    background-color: #4285f4;
+    color: #fff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    transition: box-shadow 0.1s ease-in-out;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.mat-button:hover {
+    box-shadow: 0 5px 10px rgba(0,0,0,0.26);
+}
+.swap-button {
+    margin: 16px 0;
+    padding: 4px 20px;
+}
+.convert-button-box {
+    margin-top: 15px;
+}
+.convert-button {
+    width: 100%;
+    padding: 4px 0;
+}
+
+.conversion-rate-box {
+    margin: 15px 0;
+}
+.conversion-rate-info {
+    font-family: 'Lato';
+    font-size: 0.9em;
+}
+.conversion-rate-from, .conversion-rate-to {
+    margin-right: 15px;
+}
+.rate-green {
+    color: #48985c;
+}
+.rate-blue {
+    color: #3f6193;
+}
+.currency-chart {
+    width: 100%;
+    height: 200px;
+}
+
+.login-button {
+    margin-top: 15px;
+}
+.login-message-red {
+    color: #e94c4c;
+}
+
+/* Select2 CSS */
+/* Input field */
+.select2-selection__rendered {
+    font-family: 'Lato';
+    font-size: 0.9em;
+}
+/* Around the search field */
+.select2-search {
+    font-family: 'Lato';
+}
+/* Search field */
+.select2-search input {
+    font-family: 'Lato';
+}
+/* Each result */
+.select2-results {
+    font-family: 'Lato';
+}
+/* Higlighted (hover) result */
+.select2-results__option--highlighted {
+    font-family: 'Lato';
+}
+/* Selected option */
+.select2-results__option[aria-selected=true] {
+    font-family: 'Lato';
+}
+
+@media (min-width: 600px) {
+
+    h3 {
+        font-size: 0.8em;
+    }
+
+    .wrapper {
+        width: 600px;
+        margin: 0px auto;
+    }
+
+    .currency-from-box {
+        float: left;
+        width: 45%;
+    }
+    .currency-to-box {
+        float: right;
+        width: 45%;
+    }
+    .swap-row-desktop > button {
+    }
+    .swap-row > button {
+        font-size: 0.8em;
+    }
+    .clearfix {
+        clear: both;
+    }
+    .convert-button {
+        width: 200px;
+        float: right;
+    }
+    .conversion-rate-box {
+        margin: 0;
+        margin-top: 15px;
+    }
+
+}
