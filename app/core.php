@@ -27,12 +27,10 @@ if (!isset($_POST['requestType'])) {
 switch ($requestType) {
     case 'graph':
         $webService = new CheapCurrencyConverter();
-        $response = $webService->getGraphData($_POST['requestData']);
         break;
 
     case 'converter':
         $webService = new CurrencyConverter();
-        $response = $webService->getResult($_POST['requestData']);
         break;
 
     default:
@@ -40,12 +38,12 @@ switch ($requestType) {
         break;
 }
 
-// Check if errors are present, else return result
-if (isset($response['error'])) {
+try {
+    $response = $webService->getResult($_POST['requestData']);
+    echo json_encode($response->getConversionRate());
+} catch (Exception $exception) {
     header('HTTP/1.1 500 Something went wrong');
-    echo $response['error'];
-} else {
-    echo json_encode($response['result']);
+    echo $exception->getMessage();
 }
 
 ?>

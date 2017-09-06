@@ -12,13 +12,13 @@ var CurrencyConverter = (function() {
     self.setConversionDate = function() {
         var date = new Date();
         var dateString =
-            + ('0' + date.getDate()).slice(-2);
+            + ('0' + date.getDate()).slice(-2)
             + '-'
             + ('0' + (date.getMonth()+1)).slice(-2)
             + '-'
             + date.getFullYear()
         $('.conversion-rate-date').text();
-    }
+    };
 
     /**
      * Sets the conversion rate info on the screen. (e.g. CUR1 / CUR2 : number).
@@ -44,7 +44,7 @@ var CurrencyConverter = (function() {
             $('#conversion-rate-from-value').attr('class', 'rate-blue');
             $('#conversion-rate-to-value').attr('class', 'rate-green');
         }
-    }
+    };
 
     /**
      * Swaps the current selected currencies and updates all UI components
@@ -59,7 +59,7 @@ var CurrencyConverter = (function() {
         $('.amount-to').val(amountFrom);
         $('.select-currency-from').val(keyCurrencyTo).trigger('change');
         $('.select-currency-to').val(keyCurrencyFrom).trigger('change');
-    }
+    };
 
     /**
      * Converts the 'currency I have' amount to the correct new amount
@@ -67,12 +67,12 @@ var CurrencyConverter = (function() {
     self.convertAmount = function() {
         sendAjaxRequest('converter', function(response) {
             var amount = $('.amount-from').val();
-            var conversionRate = response.conversionRate;
+            var conversionRate = response.data[0];
             var newAmount = round(amount * conversionRate, 3);
             $('.amount-to').val(newAmount);
             setConversionRateInfo(response.conversionRate);
         });
-    }
+    };
 
     /**
      * Updates the chart with the new information
@@ -86,7 +86,7 @@ var CurrencyConverter = (function() {
             updateChartLegend();
             chart.update();
         });
-    }
+    };
 
     /**
      * Creates the chart/graph
@@ -114,7 +114,7 @@ var CurrencyConverter = (function() {
             });
             updateChartLegend();
         });
-    }
+    };
 
     /**
      * Updates the chart legend with the correct currencies
@@ -126,7 +126,7 @@ var CurrencyConverter = (function() {
             dataset.label = currencyFrom + '/' + currencyTo;
         });
         chart.update();
-    }
+    };
 
     /**
      * Sends an AJAX request to the back-end core with a request type (either
@@ -160,6 +160,7 @@ var CurrencyConverter = (function() {
                 }
             },
             success: function(response) {
+                console.log(response);
                 callback(JSON.parse(response));
             },
             error: function(error) {
@@ -167,7 +168,7 @@ var CurrencyConverter = (function() {
                 alert(error.responseText);
             }
         });
-    }
+    };
 
     /**
      * Custom round function.
@@ -177,7 +178,7 @@ var CurrencyConverter = (function() {
      */
     var round = function(number, precision) {
         return Math.round(number * Math.pow(10, precision)) / Math.pow(10, precision);
-    }
+    };
 
     return self;
 }());

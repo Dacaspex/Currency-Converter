@@ -13,7 +13,7 @@ interface WebService
      * @param  $data Array Array of data
      * @return Array The result of the webservice
      */
-    public function getResult($data);
+    public function getResult($data): ConversionRate;
 }
 
 ?>

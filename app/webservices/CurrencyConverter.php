@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../conversionRate/ConversionRate.php';
+
 /**
  * Webservice that retrieves the current exchange rate of the requested
  * currencies. This web service is more expensive, but also more relaible.
@@ -8,8 +10,10 @@
  */
 class CurrencyConverter implements WebService
 {
-    public function getResult($requestData)
+    public function getResult($requestData): ConversionRate
     {
+        $conversionRate = new ConversionRate();
+
         // Setup WSDL info
         $wsdl = "http://currencyconverter.kowabunga.net/converter.asmx?WSDL";
         $trace = true;
@@ -26,19 +30,17 @@ class CurrencyConverter implements WebService
         ));
 
         $clientResponse = $client->GetConversionRate($xml_array);
-        $conversionRate = (float) $clientResponse->GetConversionRateResult;
+        $_conversionRate = (float) $clientResponse->GetConversionRateResult;
 
-        if ($conversionRate == 0) {
-            return [
-                'error' => 'Conversion rate could not be retrieved'
-            ];
+        if ($_conversionRate == 0) {
+            throw new Exception("Conversion rate could not be retrieved");
         }
 
-        return [
-            'result' => [
-                'conversionRate' => round($conversionRate, 3, PHP_ROUND_HALF_UP)
-            ]
-        ];
+        $conversionRate->setConversionRate(
+            new DateTime($requestData['date']),
+            round($_conversionRate, 3, PHP_ROUND_HALF_UP)
+        );
+        return $conversionRate;
     }
 }
 

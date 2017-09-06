@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../conversionRate/ConversionRate.php';
+
 /**
  * Webservice that retrieves the current exchange rate of the requested
  * currencies. This web service is cheaper, but less reliable. Therefore this
@@ -10,7 +12,7 @@ class CheapCurrencyConverter implements WebService
     /** Maximum number of days that the graph should display */
     private $MAX_HISTORY_DAYS = 30;
 
-    public function getResult($requestData)
+    public function getGraphData($requestData)
     {
         // Check if currencies are the same
         if ($requestData['currencyFrom'] == $requestData['currencyTo']) {
@@ -30,14 +32,12 @@ class CheapCurrencyConverter implements WebService
         }
     }
 
-    public function getGraphData($requestData)
+    public function getResult($requestData): ConversionRate
     {
         $date = new DateTime($requestData['date']);
         $date->modify('-' . $this->MAX_HISTORY_DAYS . ' days');
-        $result = [
-            'labels' => [],
-            'data' => []
-        ];
+
+        $conversionRate = new ConversionRate();
 
         for ($i = 0; $i < $this->MAX_HISTORY_DAYS; $i++) {
             // Modify the date, 1 day earlier
@@ -45,23 +45,17 @@ class CheapCurrencyConverter implements WebService
             $requestData['date'] = $date->format('Y-m-d');
 
             // Get the conversion rate
-            $conversionResult = $this->getResult($requestData);
+            $conversionResult = $this->getGraphData($requestData);
+
+            $conversionRate->setConversionRate($date, $conversionResult);
 
             // If result failed, throw error
             if (!$conversionResult) {
-                return $result = [
-                    'error' => 'Conversion rate could not be retrieved or too many requests'
-                ];
+                throw new Exception("Conversion rate could not be retrieved or too many requests");
             }
-
-            // Save the conversion rate and date
-            $result['labels'][] = $date->format('m-d');
-            $result['data'][] = $conversionResult;
         }
 
-        return [
-            'result' => $result
-        ];
+        return $conversionRate;
     }
 
     public function getConversionRateFromWebservice($requestData)
